@@ -1,0 +1,7 @@
+//Bank Class
+// bank_account_no
+//name
+//amount
+//check_balance(): show amount
+//deposite():add amount
+//withdraw():deduct amount

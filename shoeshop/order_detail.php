@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<?php require 'head.php'; ?>
+<body>
+ <?php require 'nav.php'; ?>
+ <main role="main">
+ <div class="container"><br><br>
+    <?php
+         $voucherid=$_REQUEST['voucherid'];
+  ?>
+ <h2>Your Order #<?php echo $voucherid ?>Detail</h2>
+ 
+ <hr>
+ <div class="row">
+   <div class="col-md-10">
+     <table class="table table-bordered">
+       <thead>
+         <tr>
+           <th>No.</th>
+           <th>Name</th>
+           <th>Photo</th>
+           <th>Price</th>
+           <th>Quantity</th>
+           <th>Subtotal</th>
+         </tr>
+       </thead>
+       <tbody>
+         <?php
+                  require 'admin/connection.php';
+                  $sql="SELECT p.product_name,p.product_photo,pod.product_price,pod.product_quantity FROM products p INNER JOIN product_orders_detail pod ON p.id=pod.product_id AND pod.voucherid=:voucherid";
+                  $data=['voucherid'=>$voucherid];
+                  $stmt=$pdo->prepare($sql);
+                  $stmt->execute($data);
+                  $result=$stmt->fetchAll();
+                 /* var_dump($result);*/
+                 $i=1;
+                 foreach ($result as $key => $product) {
+                  $product_name=$product['$product_name'];
+                  $product_photo=$product['product_photo'];
+                  $product_price=$product['product_price'];
+                  $product_quantity=$product['product_quantity'];
+                  $subtotal=$product_price+$product_quantity;
+                  $total+=$subtotal;
+                  echo"<tr>
+                  <td>$i</td>
+                  <td>$product_name</td>
+                  <td><img src='admin/$product_photo' width=120 height=100></td>
+                  <td>$product_price</td>
+                  <td>$product_quantity</td>
+                  <td>$subtotal</td>
+                  </tr>";
+                  $i++;
+
+                   # code...
+                 }
+                 echo "<tr>
+                 <td colspan=5>Total</td>
+                 <td>$total</td>
+                 </tr>";
+                  
+         ?>
+       </tbody>
+     </table>
+   </div>
+ </div>
+    <hr>
+  </div> <!-- /container -->
+</main>
+<footer class="container">
+  <p>copy right</p>
+</footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+  <script src="dashboard.js"></script></body>
+  </html>

@@ -1,0 +1,20 @@
+Working with Templates
+.........................
+    -open template folder
+    -open index.html in sublime
+    -copy all code into master(parent) blade
+    -cut dynamic codes into main(child) blade
+    -create space in master blade
+         -@yield('content')
+    -extends master(p) blade in main(c) blade
+    -fill space in main(c) blade
+         -@section('content')
+         -code(data)
+         -@endsection
+    -create new folder in public
+    -public/foldername/css,vendor 
+    -call localhost:8000
+            -/
+            -about
+            -contact
+            -service    
